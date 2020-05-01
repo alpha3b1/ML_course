@@ -89,18 +89,27 @@ r = lambda/(2*m)*(sum(Theta1(:)(hidden_layer_size+1:end).^2) + sum(Theta2(:)(num
 J =J + r;
 
 % Compute gradients
+Delta1 = zeros(size(Theta1));
 Delta2 = zeros(size(Theta2));
 
-for p=1:m
-    delta3 = (a3(p,:)-y_(p,:));
-    delta2 = Theta2'*delta3'.*sigmoidGradient(z2(p,:));
-    %Delta3 = 
-    %Delta2 = Delta2 + delta3*a3(p,:)';
-end
+% Vectorized version not tested
+delta3 = a3-y_;
+% delta2 = (Theta2'*delta3')(2:end,:).*sigmoidGradient(z2)';
+% delta2 = (Theta2'*delta3')*sigmoidGradient(z2)
+delta2=(Theta2'*delta3')'.*[ones(m,1) sigmoidGradient(z2)];
+Delta1 = delta2'*[ones(m,1) X];
+Delta2 = delta3'*[ones(m,1) a2];
 
-Delta2 = Delta2(2:end);
+Theta1_grad = 1/m*Delta1;
+Theta2_grad = 1/m*Delta2;
 
-Delta2 = (1/m).*Delta2;
+% for p=1:m
+%     delta3 = (a3(p,:)-y_(p,:));
+%     delta2 = (Theta2'*delta3')(2:end).*sigmoidGradient(z2(p,:))';
+%     Delta2 = Delta2 + delta3*a2'
+%     %Delta2 = Delta2 + delta3*a3(p,:)';
+% end
+
 % -------------------------------------------------------------
 
 % =========================================================================
