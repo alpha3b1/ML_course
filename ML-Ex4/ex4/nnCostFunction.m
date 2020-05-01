@@ -22,6 +22,8 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
+% size(Theta1)
+% size(Theta2)
 % Setup some useful variables
 m = size(X, 1);
          
@@ -97,7 +99,7 @@ delta3 = a3-y_;
 % delta2 = (Theta2'*delta3')(2:end,:).*sigmoidGradient(z2)';
 % delta2 = (Theta2'*delta3')*sigmoidGradient(z2)
 delta2=(Theta2'*delta3')'.*[ones(m,1) sigmoidGradient(z2)];
-Delta1 = delta2'*[ones(m,1) X];
+Delta1 = delta2(:,2:end)'*[ones(m,1) X];
 Delta2 = delta3'*[ones(m,1) a2];
 
 Theta1_grad = 1/m*Delta1;
