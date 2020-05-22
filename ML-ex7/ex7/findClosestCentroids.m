@@ -20,12 +20,17 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
-
-
-
-
+m = size(X,1);
+for p=1:m
+    dmin = Inf;
+    for q=1:K
+        d = norm(X(p,:)-centroids(q,:))^2;
+        if dmin > d
+            dmin = d;
+            idx(p) = q;
+        end
+    end
+end
 
 % =============================================================
 
