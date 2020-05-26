@@ -39,20 +39,22 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
+% ==========================================================
+% Compute cost, take into account only values for which R(i,j) =1 that is
+% User j provided rating for movie i
+J = 1/2*sum(sum((((Theta*X')'.*R)-Y).^2));
+% Add regularization terms
 
+J = J +lambda/2* sum((Theta.^2)(:))+lambda/2*sum((X.^2)(:));
 
+% Compute gradients
+Theta_grad = (((Theta*X')'.*R)-Y)'*X;
+X_grad = (((Theta*X')'.*R)-Y)*Theta;
 
+% Regularize Gradients
 
-
-
-
-
-
-
-
-
-
-
+Theta_grad = Theta_grad + lambda * Theta;
+X_grad = (((Theta*X')'.*R)-Y)*Theta + lambda*X;
 
 
 % =============================================================
