@@ -14,6 +14,9 @@
 - Linear Algebra
 - Derivation of the SVD 
    - what is the covariance
+- Stochastic gradient descent
+- Online learning algorithms ( click through rate)
+
 ## Ideas
 Is it possible to use Anomaly detection to identify strange move in the price of a stock.
 Is it possible to determine the distribution of the parameter by ploting the data.
